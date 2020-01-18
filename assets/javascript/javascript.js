@@ -1,10 +1,26 @@
 // global varibles to be used
 var queryURL;
+var ingredArray = [];
 
+$("#addButton").on("click",function(event){
+    event.preventDefault();
+    userSearch = $("#ingredient").val();
+    if(ingredArray.includes(userSearch)){
+        alert("This is already included!")
+    } else {
+        ingredArray.push(userSearch);
+    }
+    $(".addedIngredients").text(ingredArray);
+    
+})
 // button to submit
 $("#submitButton").on("click",function(event){
     event.preventDefault();
-    userSearch = $("#ingredient").val();
+    tempStr = ingredArray.toString();
+    console.log(tempStr)
+    tempStr = tempStr.replace(",","+");
+
+
     appId = "e7e14c99"
     appKey = "8b305785d6e489018ccfd57f33064460"
     queryURL = `https://api.edamam.com/search?q=${userSearch}&app_id=${appId}&app_key=${appKey}`;
@@ -12,8 +28,6 @@ $("#submitButton").on("click",function(event){
 });
 
 var makeAPICall= function(queryURL){
-    console.log("YORU IN THE MAKE API CALL FUNCITON")
-    console.log(queryURL)
 // api call for recipes based on ingredients
 var settings = {
 	"url": queryURL,
@@ -23,16 +37,14 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
     console.log(response);
-    apiURL = response.hits[0].recipe.url
+    foodTitle = response.hits[0].recipe.label;
+    apiURL = response.hits[0].recipe.url;
     newDiv = $("<div>");
-    a = $("<a>");
-    newDiv.html(`<a href=${apiURL}>${userSearch}</a>`)
-    a.attr("class", "r-link")
-    newDiv.append(a);
+    newDiv.html(`<a href=${apiURL}>${foodTitle}</a>`);
     $(".results").html(newDiv);
 
-    newDiv = $("<div>");
-    // newDiv.append(response.hits[0].recipe.url);
-    console.log(response.hits[0].recipe.url);
+    var image = $("<img>");
+    image.attr("src", response.hits[0].recipe.image);
+    $(".results").append(image)
 });
 }      
