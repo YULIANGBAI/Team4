@@ -17,13 +17,11 @@ $("#addButton").on("click",function(event){
 $("#submitButton").on("click",function(event){
     event.preventDefault();
     tempStr = ingredArray.toString();
-    console.log(tempStr)
     tempStr = tempStr.replace(",","+");
-
-
+    // console.log(tempStr)
     appId = "e7e14c99"
     appKey = "8b305785d6e489018ccfd57f33064460"
-    queryURL = `https://api.edamam.com/search?q=${userSearch}&app_id=${appId}&app_key=${appKey}`;
+    queryURL = `https://api.edamam.com/search?q=${tempStr}&app_id=${appId}&app_key=${appKey}`;
     makeAPICall(queryURL)
 });
 
@@ -33,7 +31,7 @@ var settings = {
 	"url": queryURL,
 	"method": "GET",
 }
-// https://api.edamam.com/search?q=chicken&app_id=e7e14c99&app_key=8b305785d6e489018ccfd57f33064460
+// https://api.edamam.com/search?q=chicken+apple+pear&app_id=e7e14c99&app_key=8b305785d6e489018ccfd57f33064460
 
 $.ajax(settings).done(function (response) {
     console.log(response);
