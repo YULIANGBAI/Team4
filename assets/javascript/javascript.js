@@ -24,18 +24,15 @@ var settings = {
 $.ajax(settings).done(function (response) {
     console.log(response);
     apiURL = response.hits[0].recipe.url
-    // my code
     newDiv = $("<div>");
     a = $("<a>");
-    a.html(`<a href=${apiURL}> Click here for recipe! </a>`)
+    newDiv.html(`<a href=${apiURL}>${userSearch}</a>`)
     a.attr("class", "r-link")
     newDiv.append(a);
     $(".results").html(newDiv);
-    //  ======= can try and see if you guys can include that a tag
+
     newDiv = $("<div>");
     // newDiv.append(response.hits[0].recipe.url);
     console.log(response.hits[0].recipe.url);
-
-    $(".results").append();
 });
-}
+}      
