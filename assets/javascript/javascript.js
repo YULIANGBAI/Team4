@@ -13,6 +13,13 @@ $("#addButton").on("click",function(event){
     $(".addedIngredients").text(ingredArray);
     
 })
+$("#clearButton").on("click",function(event){
+    event.preventDefault();
+    userSearch = $("#ingredient").val();
+    ingredArray = [];
+    $(".addedIngredients").text(ingredArray);
+    
+})
 // button to submit
 $("#submitButton").on("click",function(event){
     event.preventDefault();
@@ -25,12 +32,28 @@ $("#submitButton").on("click",function(event){
     makeAPICall(queryURL)
 });
 
-var makeAPICall= function(queryURL){
-// api call for recipes based on ingredients
-var settings = {
-	"url": queryURL,
-	"method": "GET",
+// Create function for buttons regarding cuisine
+
+// 2nd API function for restaurants
+var restaurantAPICall = function(queryURL){
+    var settings = {
+        "url": queryURL,
+        "method": "GET",
+    }
+
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        // Add response code here
+    });
+
 }
+
+var makeAPICall = function(queryURL){
+// api call for recipes based on ingredients
+    var settings = {
+        "url": queryURL,
+        "method": "GET",
+    }
 // https://api.edamam.com/search?q=chicken+apple+pear&app_id=e7e14c99&app_key=8b305785d6e489018ccfd57f33064460
 
     $.ajax(settings).done(function (response) {
