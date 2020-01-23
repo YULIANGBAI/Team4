@@ -1,6 +1,7 @@
 // global varibles to be used
 var queryURL;
 var ingredArray = [];
+var tempPlaceID;
 
 $("#addButton").on("click",function(event){
     event.preventDefault();
@@ -30,10 +31,20 @@ $("#submitButton").on("click",function(event){
     appId = "e7e14c99"
     appKey = "8b305785d6e489018ccfd57f33064460"
     queryURL = `https://api.edamam.com/search?q=${tempStr}&app_id=${appId}&app_key=${appKey}`;
-    makeAPICall(queryURL)
+    makeAPICall(queryURL);
 });
 
 // Create function for buttons regarding cuisine
+$("#cuisineButton").on("click",function(event){
+    console.log($("#cuisineButton").val());
+    buttonPressed = $("#cuisineButton").val();
+    apiKey = `AIzaSyDjO7VnG8faKTEwJNatbvRRZfJyuBxbNEk`
+    queryURL = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${buttonPressed}&inputtype=textquery&type=restaurant&key=${apiKey}`
+    restaurantAPICall(queryURL);
+    queryURL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${tempPlaceID}&fields=name,rating,formatted_phone_number&key=${apiKey}`
+    placeDetailCall(queryURL);
+});
+
 
 // 2nd API function for restaurants
 var restaurantAPICall = function(queryURL){
@@ -44,9 +55,19 @@ var restaurantAPICall = function(queryURL){
 
     $.ajax(settings).done(function (response) {
         console.log(response);
+        tempPlaceID = response.candidates[0].place_id;
+    });
+}
+
+var placeDetailCall = function(queryURL){
+    var settings = {
+        "url": queryURL,
+        "method": "GET",
+    }
+    $.ajax(settings).done(function (response) {
+        console.log(response);
         // Add response code here
     });
-
 }
 
 var makeAPICall = function(queryURL){
