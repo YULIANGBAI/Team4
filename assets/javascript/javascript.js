@@ -29,8 +29,8 @@ $(document).ready(function(){
         tempStr = ingredArray.toString();
         tempStr = tempStr.replace(",","+");
         // console.log(tempStr)
-        appId = "e7e14c99"
-        appKey = "8b305785d6e489018ccfd57f33064460"
+        appId = process.env.edamamAppID;
+        appKey = proncess.env.edamamApiKey
         queryURL = `https://api.edamam.com/search?q=${tempStr}&app_id=${appId}&app_key=${appKey}`;
         makeAPICall(queryURL);
     });
@@ -39,7 +39,7 @@ $(document).ready(function(){
     $(".cuisineButton").on("click",function(event){
         console.log(this);
         buttonPressed = $(".cuisineButton").val();
-        apiKey = `AIzaSyDjO7VnG8faKTEwJNatbvRRZfJyuBxbNEk`
+        apiKey = process.env.googleApiKey;
         queryURL = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${buttonPressed}&inputtype=textquery&type=restaurant&key=${apiKey}`
         restaurantAPICall(queryURL);
         queryURL = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${tempPlaceID}&fields=name,rating,formatted_phone_number&key=${apiKey}`
