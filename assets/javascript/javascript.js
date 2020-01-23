@@ -13,6 +13,7 @@ $("#addButton").on("click",function(event){
     $(".addedIngredients").text(ingredArray);
     
 })
+// Button to clear
 $("#clearButton").on("click",function(event){
     event.preventDefault();
     userSearch = $("#ingredient").val();
