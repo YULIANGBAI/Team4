@@ -7,6 +7,7 @@ $("#addButton").on("click",function(event){
     userSearch = $("#ingredient").val();
     if(ingredArray.includes(userSearch)){
         alert("This is already included!")
+        $("#ingredient") = "";
     } else {
         ingredArray.push(userSearch);
     }
@@ -75,13 +76,23 @@ var makeAPICall = function(queryURL){
             foodTitle = response.hits[rNum].recipe.label;
             apiURL = response.hits[rNum].recipe.url;
 
-            newDiv = $("<div>");
-            newDiv.html(`<a href=${apiURL}>` + foodTitle + '</a>');
+            var newDiv = $("<div>");
+            var a = $("<a>");
+            a.attr("href", apiURL);
+            a.append(foodTitle);
             var image = $("<img>");
             image.attr("src", response.hits[rNum].recipe.image);
+            newDiv.append(a);
             newDiv.append(image);
-            $(".results").append(newDiv);
-            console.log(recipeNums);
+
+            // newDiv = $("<div>");
+            // newDiv.html(`<a href=${apiURL}>` + foodTitle);
+            // var image = $("<img>");
+            // image.attr("src", response.hits[rNum].recipe.image);
+            // newDiv.append(image);
+            $(".results").prepend(newDiv);
+            console.log(rNum);
+            console.log(response);
         };
         
     });
